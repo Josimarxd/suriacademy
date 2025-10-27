@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site 3 Colunas com Submenus Laterais</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Cabeçalho */
+    .header {
+      background-color: #007bff;
+      padding: 10px 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container img {
+      height: 40px;
+      width: auto;
+    }
+
+    /* Layout principal */
+    .main-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Sidebar esquerda */
+    .sidebar {
+      width: 250px;
+      background-color: #f7f7f7;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      box-sizing: border-box;
+      overflow-y: auto;
+      position: relative;
+      z-index: 5;
+    }
+
+    .sidebar h2 {
+      padding: 0 20px;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    .menu-group-title {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-group-title:hover {
+      background-color: #e5e5e5;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .arrow.up {
+      transform: rotate(180deg);
+    }
+
+    .menu-item {
+      padding: 8px 20px 8px 40px;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background-color: #e0e0e0;
+      border-left: 3px solid #007bff;
+    }
+
+    /* Submenu flutuante */
+    .submenu-drawer {
+      position: absolute;
+      top: 60px;
+      left: 250px;
+      width: 200px;
+      background-color: #ededed;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      padding: 10px 0;
+    }
+
+    .submenu-drawer.open {
+      display: flex;
+    }
+
+    /* Conteúdo central */
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    /* Coluna direita */
+    .right-column {
+      width: 300px;
+      border-left: 1px solid #ddd;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #fafafa;
+      overflow-y: auto;
+    }
+
+    .tab {
+      display: none;
+    }
+
+    .tab.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo-container">
+      <img src="generated-image.png" alt="Logo Suri Academy">
+    </div>
+  </div>
+
+  <div class="main-container">
+    <!-- Sidebar esquerda -->
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <div class="menu-item" onclick="openTab('home', this)">Home</div>
+
+      <div class="menu-group-title" onclick="toggleSubmenu('apis-submenu', this)">
+        <span>APIs</span>
+        <span class="arrow">▼</span>
+      </div>
+
+      <div class="menu-group-title" onclick="toggleSubmenu('webhooks-submenu', this)">
+        <span>Webhooks</span>
+        <span class="arrow">▼</span>
+      </div>
+
+      <div class="menu-group-title" onclick="toggleSubmenu('modelos-submenu', this)">
+        <span>Models</span>
+        <span class="arrow">▼</span>
+      </div>
+    </div>
+
+    <!-- Submenus laterais -->
+    <div id="apis-submenu" class="submenu-drawer">
+      <div class="menu-item" onclick="openTab('apis_geral', this)">Visão Geral</div>
+      <div class="menu-item" onclick="openTab('apis_auth', this)">Autenticação</div>
+      <div class="menu-item" onclick="openTab('apis_docs', this)">Documentação</div>
+    </div>
+
+    <div id="webhooks-submenu" class="submenu-drawer">
+      <div class="menu-item" onclick="openTab('webhooks_config', this)">Configuração</div>
+      <div class="menu-item" onclick="openTab('webhooks_logs', this)">Logs de Eventos</div>
+    </div>
+
+    <div id="modelos-submenu" class="submenu-drawer">
+      <div class="menu-item" onclick="openTab('modelos_visao', this)">Modelos Disponíveis</div>
+      <div class="menu-item" onclick="openTab('modelos_tuning', this)">Fine-tuning</div>
+    </div>
+
+    <!-- Conteúdo central -->
+    <div class="content">
+      <div id="home" class="tab active">
+        <h1>Bem-vindo</h1>
+        <p>Selecione uma opção no menu lateral para abrir a aba correspondente.</p>
+      </div>
+
+      <div id="apis_geral" class="tab">
+        <h1>APIs: Visão Geral</h1>
+        <p>Informações gerais sobre a nossa plataforma de APIs.</p>
+      </div>
+      <div id="apis_auth" class="tab">
+        <h1>APIs: Autenticação</h1>
+        <p>Detalhes sobre como autenticar suas requisições.</p>
+      </div>
+      <div id="apis_docs" class="tab">
+        <h1>APIs: Documentação</h1>
+        <p>Acesse a documentação completa dos endpoints.</p>
+      </div>
+
+      <div id="webhooks_config" class="tab">
+        <h1>Webhooks: Configuração</h1>
+        <p>Guia de como configurar seus webhooks.</p>
+      </div>
+      <div id="webhooks_logs" class="tab">
+        <h1>Webhooks: Logs de Eventos</h1>
+        <p>Visualize o histórico e o status dos seus eventos de webhook.</p>
+      </div>
+
+      <div id="modelos_visao" class="tab">
+        <h1>Models: Modelos Disponíveis</h1>
+        <p>Lista de todos os modelos de IA que você pode utilizar.</p>
+      </div>
+      <div id="modelos_tuning" class="tab">
+        <h1>Models: Fine-tuning</h1>
+        <p>Orientações para o processo de fine-tuning (ajuste fino) de modelos.</p>
+      </div>
+    </div>
+
+    <!-- Coluna direita -->
+    <div class="right-column">
+      <h2>Informações</h2>
+      <p>Aqui você pode colocar informações adicionais, como detalhes da API, documentação, etc.</p>
+    </div>
+  </div>
+
+  <script>
+    function openTab(tabId, menuItem) {
+      // Esconde todas as abas
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      // Exibe a aba desejada
+      document.getElementById(tabId).classList.add('active');
+
+      // Remove destaque dos itens de menu
+      const menuItems = document.querySelectorAll('.menu-item');
+      menuItems.forEach(item => item.classList.remove('active'));
+
+      // Destaca o item clicado
+      if (menuItem) menuItem.classList.add('active');
+
+      // Fecha todos os submenus
+      document.querySelectorAll('.submenu-drawer').forEach(drawer => drawer.classList.remove('open'));
+      document.querySelectorAll('.arrow').forEach(arrow => arrow.classList.remove('up'));
+    }
+
+    function toggleSubmenu(submenuId, groupTitle) {
+      const submenu = document.getElementById(submenuId);
+
+      // Fecha os outros
+      document.querySelectorAll('.submenu-drawer').forEach(drawer => {
+        if (drawer.id !== submenuId) drawer.classList.remove('open');
+      });
+
+      // Alterna o submenu atual
+      submenu.classList.toggle('open');
+
+      // Atualiza setas
+      document.querySelectorAll('.arrow').forEach(arrow => arrow.classList.remove('up'));
+      if (submenu.classList.contains('open')) {
+        groupTitle.querySelector('.arrow').classList.add('up');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const homeItem = document.querySelector('.menu-item');
+      if (homeItem && homeItem.textContent.trim() === 'Home') {
+        openTab('home', homeItem);
+      } else {
+        document.getElementById('home').classList.add('active');
+      }
+    });
+  </script>
+
+</body>
+</html>
